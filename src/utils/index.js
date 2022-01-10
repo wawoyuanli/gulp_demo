@@ -1,5 +1,7 @@
-const name = '胡元丽'
-export { 
-    name
+const name = '张三'
+const age = 26
+export {
+    name,
+    age
 }
-console.log(name)
+console.log(name, age)
