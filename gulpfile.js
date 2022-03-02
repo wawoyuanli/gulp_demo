@@ -1,5 +1,5 @@
 /**引入gulpapi */
-const { series, parallel, src, dest } = require('gulp')
+let { series, parallel, src, dest } = require('gulp')
 //引入babel 转译es6
 const babel = require('gulp-babel')
 //压缩js
@@ -20,20 +20,22 @@ const pages = () => {
 
 const babelToes5 = () => {
     return src('src/utils/*.js')
-        .pipe(babel({
+        .pipe(babel({ //转译
             presets: ['babel-preset-env']
         }))
-        .pipe(uglify())
+        .pipe(uglify()) //压缩
         .pipe(dest('dist/utils'))
 }
 const deletDist = (cb) => {
-    del(['dist'], cb());
+    del('./dist');
+    cb()
 }
 
-module.exports = {
-    babelToes5,
-    html,
-    deletDist,
-    pages
-}
-module.exports.default = series(deletDist, parallel(babelToes5, html,pages)) 
+
+module.exports.default = series(deletDist, babelToes5, parallel(html, pages))
+// module.exports = {
+//     babelToes5,
+//     html,
+//     deletDist,
+//     pages
+// }
